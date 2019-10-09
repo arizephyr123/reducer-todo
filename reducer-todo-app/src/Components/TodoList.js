@@ -1,31 +1,24 @@
-// this is where the list is compliled
-import React, { useState, useReducer } from "react";
+import React from "react";
+import Todo from "./Todo";
 
-import { todoInitialState, todoReducer } from "../Reducers";
+const TodoList = props => {
+  console.log(props.todos.todos);
+  const todos = props.todos.todos;
 
-const TodoList = () => {
-  const [state, dispatch] = useReducer(todoReducer, todoInitialState);
-  const [newTodo, setNewTodo] = useState("");
+  const toggleItem = id => {
+    props.dispatch({ type: "TOGGLE_COMPLETED", payload: id });
+  };
 
-  const handleChanges = e => {
-    setNewTodo(e.target.value);
-    console.log(state);
+  const clearCompleted = e => {
+    props.dispatch({ type: "CLEAR_COMPLETED" });
   };
 
   return (
     <div>
-      <h2>is this working???</h2>
-      <input
-        type="text"
-        name="newTodo"
-        value={newTodo}
-        onChange={handleChanges}
-      ></input>
-      <button
-        onClick={() => dispatch({ type: "ADD_NEW_TODO", payload: newTodo })}
-      >
-        Add
-      </button>
+      {todos.map(todo => (
+        <Todo key={todo.id} todo={todo} toggleItem={toggleItem} />
+      ))}
+      <button onClick={clearCompleted}>Clear Completed</button>
     </div>
   );
 };

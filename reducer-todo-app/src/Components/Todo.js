@@ -1,15 +1,20 @@
 // this displays the todos
 
-import React, { useReducer } from 'react';
+import React from 'react';
 
-import { todoInitialState, todoReducer } from "../Reducers";
+// import { todoInitialState, reducer } from "../Reducers";
 
-const Todo = () => {
-    const [{item, completed, id}, dispatch] = useReducer(todoReducer, todoInitialState);
+ const Todo = props => {
+    console.log(props);
+    // const [{item, completed, id}, dispatch] = useReducer(reducer, todoInitialState);
 
     return(
-        <div>
-            <h4>{item}</h4>
+        <div className={`item${props.todo.completed} ? -toggled : null`}
+        onClick={() => props.toggleItem(props.todo.completed)}
+        >
+            <h4>{props.todo.item}</h4>
         </div>
     )
-}
+};
+
+export default Todo;
